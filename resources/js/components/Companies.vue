@@ -14,12 +14,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-    .companies-container {
-        max-width: 768px;
-        width: 100%;
-        margin: 0 auto;
-        padding: 2.5rem;
-    }
-</style>

@@ -2,7 +2,8 @@
     <div class="company-filter-wrap">
         <div class="company-filter-input-style">
             <label for="name">Buscar</label>
-            <input id="name" autocomplete="nope" placeholder="Digite o nome" @focus="handleInputFocus" @focusout="handleInputFocusOut">
+            <input v-model="name" id="name" autocomplete="nope" placeholder="Digite o nome" @focus="handleInputFocus"
+                   @focusout="handleInputFocusOut">
             <span class="icon">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -24,10 +25,14 @@ export default {
     data() {
         return {
             selectedState: '',
-            selectedStateLabel: 'Todas'
+            selectedStateLabel: 'Todas',
+            name: ''
         }
     },
-    mounted() {
+    watch: {
+        name(val) {
+            this.emitter.emit('update-name-filter', val);
+        }
     },
     methods: {
         handleInputFocus(e) {
@@ -39,19 +44,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss">
-.company-filter-wrap {
-    display: flex;
-    gap: 1rem;
-
-    .company-filter-input-style {
-        max-width: 28.5%;
-
-        &:first-child {
-            max-width: 50%;
-        }
-    }
-}
-</style>
-

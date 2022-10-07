@@ -27,7 +27,7 @@ class CompanyController extends Controller
             });
         }
 
-        $companies = $query->latest()->simplePaginate(10);
+        $companies = $query->latest()->simplePaginate(6);
 
         return response($companies, 200);
     }

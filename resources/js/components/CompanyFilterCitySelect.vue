@@ -6,6 +6,7 @@
         name="city"
         @handleInput="handleInput"
         @open="handleOpen"
+        @selected="handleSelected"
         @loadMore="handleLoadMore"
         ref="fakeSelect"
     ></fake-select>
@@ -35,6 +36,9 @@ export default {
         })
     },
     methods: {
+        handleSelected(item) {
+            this.emitter.emit('city-selected', item);
+        },
         handleInput(e) {
             this.q = e.target.value
         },

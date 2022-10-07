@@ -14,7 +14,9 @@
 
 h1 {
     font-weight: 700;
-    color: #203B43;
+    color: $primary-color;
+    font-size: 1.5rem;
+    margin: 0;
 }
 
 .container {
@@ -27,6 +29,19 @@ h1 {
     border-radius: .5rem;
 }
 
+.companies-container {
+    max-width: 768px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2.5rem;
+}
+
+.company-header-container {
+    background-color: white;
+    padding: 1.25rem 2rem;
+    box-shadow: 0px 0px 14px 0px rgba($primary-color, .08);
+}
+
 .company-filter-input-style {
     display: flex;
     flex-direction: column;
@@ -34,7 +49,7 @@ h1 {
     position: relative;
     padding: 0.625rem 0.75rem;
     border-radius: 0.25rem;
-    border-bottom: 2px solid #CBDBE0;
+    border-bottom: 2px solid $lighten-2;
     width: 100%;
     transition: .2s ease-in-out;
 
@@ -45,12 +60,12 @@ h1 {
         outline: none;
         padding: 1.2rem 2rem 0 0;
         line-height: 100%;
-        color: #608289;
+        color: $secondary-color;
         font-weight: 500;
 
         &::placeholder {
             font-family: 'DM Sans', sans-serif;
-            color: #9EA8AC;
+            color: $lighten;
             font-weight: 400;
         }
     }
@@ -62,12 +77,12 @@ h1 {
         outline: none;
         padding: 1.2rem 2rem 0 0;
         line-height: 100%;
-        color: #608289;
+        color: $secondary-color;
         font-weight: 500;
 
         &::placeholder {
             font-family: 'DM Sans', sans-serif;
-            color: #9EA8AC;
+            color: $lighten;
             font-weight: 400;
         }
     }
@@ -75,7 +90,7 @@ h1 {
     label {
         font-size: 0.875rem;
         font-weight: 500;
-        color: #9EA8AC;
+        color: $lighten;
         position: absolute;
         top: 0.625rem;
         left: 0.75rem;
@@ -91,7 +106,7 @@ h1 {
     }
 
     &.focus {
-        border-bottom: 2px solid #608289;
+        border-bottom: 2px solid $secondary-color;
     }
 }
 
@@ -100,7 +115,7 @@ h1 {
 
     .fake-select-value {
         padding: 1.2rem 2rem 0 0;
-        color: #608289;
+        color: $secondary-color;
     }
 
     .fake-select-dropdown {
@@ -140,9 +155,198 @@ h1 {
 
     .fake-select-bottom-loader {
         font-size: 0.75rem;
-        color: #9EA8AC;
+        color: $lighten;
         text-align: center;
         margin: 0;
         padding: 0.5rem;
+    }
+}
+
+.no-records {
+    font-size: 1rem;
+    color: $secondary-color;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.loading-icon {
+    width: 30px;
+    height: 30px;
+    border: 2px solid $primary-color;
+    border-radius: 50%;
+    border-left-color: transparent;
+    margin: 1rem;
+    animation: spin infinite linear .5s;
+}
+
+.company-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .company-list-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2.5rem 0;
+        width: 100%;
+
+        &.skeleton {
+            .company-list-item {
+                h2 {
+                    width: 80%;
+                    height: 1rem;
+                    background-color: rgba($primary-color, 0.1);
+                }
+
+                .body {
+                    flex: 1;
+
+                    p {
+                        width: 100%;
+                        height: 0.75rem;
+                        line-height: 0;
+                        margin-bottom: 0.25rem;
+                        background-color: rgba($primary-color, 0.1);
+                        flex: auto;
+
+                        &:first-child {
+                            width: 80%;
+                        }
+                    }
+                }
+
+                .company-list-actions {
+                    width: 100%;
+
+                    span {
+                        width: 30%;
+                        height: 1rem;
+                        line-height: 0;
+                        background-color: rgba($primary-color, 0.1);
+                        display: inline-block;
+
+                        &:first-child {
+                            margin-right: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .company-list-item {
+        border: 1px solid rgba($primary-color, 0.1);
+        border-radius: 0.25rem;
+        padding: 1.625rem;
+        height: 9.75rem;
+        display: flex;
+        flex-direction: column;
+
+        p {
+            font-size: 0.75rem;
+            color: $light-gray;
+            font-weight: 400;
+            line-height: 1rem;
+            flex: 1;
+        }
+
+        h2 {
+            font-size: 1rem;
+            color: $secondary-color;
+            font-weight: 700;
+        }
+
+        .company-list-actions {
+            justify-self: flex-end;
+            line-height: 100%;
+
+            a {
+                color: $secondary-color;
+                font-weight: 700;
+                font-size: .875rem;
+                text-decoration: none;
+                transition: 0.2s color;
+                line-height: 100%;
+
+                &:first-child {
+                    margin-right: 2rem;
+                }
+
+                &:hover {
+                    color: rgba($secondary-color, .8);
+                }
+            }
+        }
+    }
+
+    .company-list-load-more {
+        width: 200px;
+        background-color: $accent;
+        color: white;
+        border-radius: 0.25rem;
+        line-height: 100%;
+        font-size: 1rem;
+        font-weight: 700;
+        padding: 1rem;
+        max-width: 100%;
+        border: 0;
+        transition: .2s background-color ease-in-out;
+
+        &:hover {
+            background-color: lighten($accent, 10%);
+        }
+    }
+}
+
+.company-filter-wrap {
+    display: flex;
+    gap: 1rem;
+
+    .company-filter-input-style {
+        max-width: 28.5%;
+
+        &:first-child {
+            max-width: 50%;
+        }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .companies-container {
+        max-width: 100%;
+        width: 100%;
+
+        .company-list-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .company-filter-wrap {
+        flex-direction: column;
+        gap: 1rem;
+
+        .company-filter-input-style {
+            max-width: 100% !important;
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .companies-container {
+        padding: 1rem;
+
+        .company-list-item {
+            padding: 1rem;
+        }
     }
 }
