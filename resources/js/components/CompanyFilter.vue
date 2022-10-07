@@ -46,10 +46,10 @@ export default {
     gap: 1rem;
 
     .company-filter-input-style {
-        width: 30%;
+        max-width: 28.5%;
 
         &:first-child {
-            width: 40%;
+            max-width: 50%;
         }
     }
 }

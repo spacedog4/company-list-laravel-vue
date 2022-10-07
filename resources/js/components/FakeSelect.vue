@@ -17,6 +17,7 @@
                     item.name
                 }}
             </div>
+            <p ref="fakeSelectBottomLoader" class="fake-select-bottom-loader" v-show="options && options.next_page_url">Carregando...</p>
         </div>
     </div>
 </template>
@@ -57,6 +58,10 @@ export default {
         }
     },
     mounted() {
+        setTimeout(() => {
+            this.startObserver()
+        }, 100)
+
         window.addEventListener('click', e => {
             if (e.target.closest('.company-filter-input-style') !== this.$el && this.open) {
                 this.closeSelect()
@@ -64,6 +69,22 @@ export default {
         });
     },
     methods: {
+        clear() {
+            this.selectedOption = ''
+            this.selectedOptionInput = this.placeholder
+        },
+        startObserver() {
+            let observer = new IntersectionObserver((entries, opts) => {
+                console.log('teste');
+                if (entries[0].isIntersecting && this.options && (this.options.data && this.options.next_page_url)) {
+                    this.$emit('loadMore');
+                }
+            }, {
+                root: null,
+                threshold: 0
+            });
+            observer.observe(this.$refs.fakeSelectBottomLoader)
+        },
         handleInputFocus() {
             this.openSelect();
 

@@ -6,7 +6,8 @@
         name="city"
         @handleInput="handleInput"
         @open="handleOpen"
-        @selected="handleSelected"
+        @loadMore="handleLoadMore"
+        ref="fakeSelect"
     ></fake-select>
 </template>
 
@@ -29,13 +30,11 @@ export default {
 
         this.emitter.on('state-selected', item => {
             this.state = item
+            this.$refs.fakeSelect.clear()
             this.getData()
         })
     },
     methods: {
-        handleSelected(item) {
-            this.emitter.emit('state-selected', item);
-        },
         handleInput(e) {
             this.q = e.target.value
         },
@@ -44,16 +43,22 @@ export default {
                 this.q = null
             }
         },
-        getData() {
-            this.data = undefined;
-
+        handleLoadMore() {
+            this.getData(this.data.current_page + 1);
+        },
+        getData(page = 1) {
             axios.get('/api/cities', {
                 params: {
                     q: this.q,
-                    uf: this.state ? this.state.uf : null
+                    uf: this.state ? this.state.uf : null,
+                    page: page
                 }
             }).then(({data}) => {
-                this.data = data;
+                if (page > 1) {
+                    let oldData = this.data.data
+                    data.data = oldData.concat(data.data)
+                }
+                this.data = data
             });
         }
     }

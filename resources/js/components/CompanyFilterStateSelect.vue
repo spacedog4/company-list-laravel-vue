@@ -7,6 +7,7 @@
         @handleInput="handleInput"
         @open="handleOpen"
         @selected="handleSelected"
+        @loadMore="handleLoadMore"
     ></fake-select>
 </template>
 
@@ -34,20 +35,25 @@ export default {
             this.q = e.target.value
         },
         handleOpen(val) {
-            console.log(val)
             if (!val) {
                 this.q = null
             }
         },
-        getData() {
-            this.data = undefined;
-
+        handleLoadMore() {
+            this.getData(this.data.current_page + 1);
+        },
+        getData(page = 1) {
             axios.get('/api/states', {
                 params: {
-                    q: this.q
+                    q: this.q,
+                    page: page
                 }
             }).then(({data}) => {
-                this.data = data;
+                if (page > 1) {
+                    let oldData = this.data.data
+                    data.data = oldData.concat(data.data)
+                }
+                this.data = data
             });
         }
     }
