@@ -9,6 +9,8 @@ class City extends Model
 {
     use HasFactory;
 
+    public $incrementing = false;
+
     public function company()
     {
         return $this->hasMany(Company::class);
