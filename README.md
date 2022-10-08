@@ -12,35 +12,51 @@ em seu sistema
 **Dependencias:**
 
 - Docker
+- WSL
 
 ### Passo a Passo
 
 Clone o projeto
-
 ```
 git clone git@github.com:spacedog4/company-list-laravel-vue.git
 ```
 
-Inicie os container
-
+Copie o arquivo de variáveis de ambiente (não se preocupe que ele já está configurado)
 ```
-docker-compose up -d
+cp .env.example .env
 ```
 
-Instale as dependencias
-
+Execute o comando a baixo para instalar suas dependencias (precisamos para conseguir usar os comandos do sail)
 ```
-docker exec api composer install
+docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v $(pwd):/opt \
+    -w /opt \
+    laravelsail/php81-composer:latest \
+    composer install --ignore-platform-reqs
+```
+
+Inicialize a API
+```
+sail up -d
+```
+
+Crie a base de dados e também alimente ela com algumas informações
+```
+sail artisan migrate --seed
 ```
 
 Execute o front-end
-
 ```
-sail npm run dev
+sail npm install && npm run build
 ```
 
 Prontinho, você pode acessar o sistema através do endereço
-
 ```
 http://localhost
+```
+
+Você pode rodar os testes unitários atraves do comando abaixo
+```
+sail artisan test
 ```
